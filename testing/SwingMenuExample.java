@@ -1,10 +1,13 @@
+package testing;
+
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 public class SwingMenuExample {
     
+    private static final int WINDOW_WIDTH = PongGame.WINDOW_WIDTH;
+    private static final int WINDOW_HEIGHT = PongGame.WINDOW_HEIGHT;
+
     public static void main(String[] args) {
         SwingUtilities.invokeLater(SwingMenuExample::createAndShowGUI);
     }
@@ -45,7 +48,7 @@ public class SwingMenuExample {
         exitBtn.setAlignmentX(Component.CENTER_ALIGNMENT);
 
         // Actions
-        startBtn.addActionListener(e -> launchGame(frame));
+        startBtn.addActionListener(e -> label.setText("Game started..."));
         settingsBtn.addActionListener(e -> JOptionPane.showMessageDialog(frame, "No settings yet."));
         aboutBtn.addActionListener(e -> JOptionPane.showMessageDialog(frame, "Simple Swing menu example."));
         exitBtn.addActionListener(e -> System.exit(0));
@@ -65,29 +68,5 @@ public class SwingMenuExample {
         frame.add(center, BorderLayout.CENTER);
 
         frame.setVisible(true);
-    }
-
-    private static void launchGame(JFrame menuFrame) {
-        JFrame gameFrame = new JFrame("Pong Game");
-        gameFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
-        PongGame game = new PongGame();
-        game.setPreferredSize(new Dimension(PongGame.WINDOW_WIDTH, PongGame.WINDOW_HEIGHT));
-
-        gameFrame.add(game);
-        gameFrame.pack();
-        gameFrame.setResizable(false);
-        gameFrame.setVisible(true);
-
-        Timer timer = new Timer(33, new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                game.gameLogic();
-                game.repaint();
-            }
-        });
-
-        timer.start();
-        menuFrame.dispose();
     }
 }
