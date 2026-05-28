@@ -1,7 +1,6 @@
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseMotionListener;
+import java.awt.event.*;
 
 public class PongGame extends JPanel implements MouseMotionListener {
 
@@ -164,10 +163,6 @@ public class PongGame extends JPanel implements MouseMotionListener {
 
     }
 
-    @Override
-    public void mouseDragged(MouseEvent e) {
-
-    }
 
     @Override
     public void mouseMoved(MouseEvent e) {

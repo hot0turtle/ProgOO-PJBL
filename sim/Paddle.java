@@ -90,4 +90,8 @@ public class Paddle {
         return false;
 
     }
+
+    public int getY() {
+        return y;
+    }
 }
