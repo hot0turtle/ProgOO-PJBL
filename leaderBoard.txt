@@ -1,0 +1,6 @@
+AAA,3
+UDE,2
+ZAA,2
+UDE,1
+AAA,1
+ZAA,1

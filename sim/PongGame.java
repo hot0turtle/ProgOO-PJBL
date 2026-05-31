@@ -2,7 +2,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 
-public class PongGame extends JPanel implements MouseMotionListener {
+public class PongGame extends JPanel implements MouseMotionListener, KeyListener {
 
     static final int WINDOW_WIDTH = 640;
     static final int WINDOW_HEIGHT = 480;
@@ -18,14 +18,19 @@ public class PongGame extends JPanel implements MouseMotionListener {
 
     private int bounceCount;
 
-    public PongGame() {
+    private String playerName;
+    private Runnable onReturnToMenu;
+
+    public PongGame(String playerName, Runnable onReturnToMenu) {
+        this.playerName = playerName;
+        this.onReturnToMenu = onReturnToMenu;
 
         gameBall = new Ball(
                 300,
                 200,
                 3,
                 3,
-                3,
+                6,
                 Color.YELLOW,
                 10
         );
@@ -34,17 +39,16 @@ public class PongGame extends JPanel implements MouseMotionListener {
                 10,
                 200,
                 75,
-                3,
+                3f,
                 Color.BLUE,
                 this
-                
         );
 
         pcPaddle = new Paddle(
                 610,
                 200,
                 75,
-                3,
+                2.5f,
                 Color.RED,
                 this
         );
@@ -58,6 +62,8 @@ public class PongGame extends JPanel implements MouseMotionListener {
 
         setPreferredSize(new Dimension(WINDOW_WIDTH, WINDOW_HEIGHT));
         addMouseMotionListener(this);
+        addKeyListener(this);
+        setFocusable(true);
 
     }
 
@@ -81,8 +87,8 @@ public class PongGame extends JPanel implements MouseMotionListener {
         g.setColor(Color.WHITE);
 
         g.drawString(
-                "Score - User [ " + userScore + " ]   PC [ " + pcScore + " ]",
-                230,
+                playerName + " [ " + userScore + " ]   PC [ " + pcScore + " ]",
+                200,
                 20
         );
 
@@ -163,11 +169,35 @@ public class PongGame extends JPanel implements MouseMotionListener {
 
     }
 
+    public int getUserScore() {
+        return userScore;
+    }
+
 
     @Override
     public void mouseMoved(MouseEvent e) {
-
         userMouseY = e.getY();
+    }
 
+    @Override
+    public void mouseDragged(MouseEvent e) {
+        userMouseY = e.getY();
+    }
+
+    @Override
+    public void keyPressed(KeyEvent e) {
+        if (e.getKeyCode() == KeyEvent.VK_ESCAPE) {
+            if (onReturnToMenu != null) {
+                onReturnToMenu.run();
+            }
+        }
+    }
+
+    @Override
+    public void keyReleased(KeyEvent e) {
+    }
+
+    @Override
+    public void keyTyped(KeyEvent e) {
     }
 }

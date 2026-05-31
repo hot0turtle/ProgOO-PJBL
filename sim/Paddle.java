@@ -6,7 +6,7 @@ public class Paddle {
     private int height;
     private int x;
     private int y;
-    private int speed;
+    private float speed;
     private Color color;
     private JPanel panel;
 
@@ -17,7 +17,7 @@ public class Paddle {
             int x,
             int y,
             int height,
-            int speed,
+            float speed,
             Color color,
             JPanel panel
     ) {

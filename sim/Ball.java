@@ -14,7 +14,7 @@ public class Ball {
 
     private Color color;
 
-    static final int MAX_SPEED = 7;
+    static final int MAX_SPEED = 15;
 
     public Ball(
             int x,
