@@ -152,7 +152,9 @@ public class Main {
         JPanel btns = new JPanel(new FlowLayout());
         JButton ok = createMenuButton("OK");
         JButton cancel = createMenuButton("Cancel");
+        JButton continueButton = createMenuButton("Continue");
         btns.add(ok);
+        btns.add(continueButton);
         btns.add(cancel);
         root.add(btns);
 
@@ -162,6 +164,13 @@ public class Main {
             result[0] = sb.toString();
             dialog.dispose();
         });
+
+        continueButton.addActionListener(a -> {
+            StringBuilder sb = new StringBuilder();
+            for (JLabel l : labels) sb.append(l.getText().charAt(0));
+            result[0] = sb.toString();
+            dialog.dispose();
+        });       
 
         cancel.addActionListener(a -> {
             result[0] = null;
@@ -232,7 +241,8 @@ public class Main {
             }
             int finalScore = gameRef[0].getUserScore();
             if (finalScore > 0) {
-                Leaderboard.addEntry(currentPlayer, finalScore);
+
+                Leaderboard.addEntry(currentPlayer, finalScore, gameRef[0].getBall());
             }
             gameFrame.dispose();
             SwingUtilities.invokeLater(Main::createAndShowGUI);

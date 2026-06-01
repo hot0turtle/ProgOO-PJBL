@@ -158,12 +158,21 @@ public class SwingMenuExample {
 
         JPanel btns = new JPanel(new FlowLayout());
         JButton ok = new JButton("OK");
+        JButton continue = new JButton("continue");
         JButton cancel = new JButton("Cancel");
         btns.add(ok);
+        btns.add(continueButton);
         btns.add(cancel);
         root.add(btns);
 
         ok.addActionListener(a -> {
+            StringBuilder sb = new StringBuilder();
+            for (JLabel l : labels) sb.append(l.getText().charAt(0));
+            result[0] = sb.toString();
+            dialog.dispose();
+        });
+
+        continueButton.addActionListener(a -> {
             StringBuilder sb = new StringBuilder();
             for (JLabel l : labels) sb.append(l.getText().charAt(0));
             result[0] = sb.toString();

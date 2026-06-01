@@ -48,7 +48,7 @@ public class PongGame extends JPanel implements MouseMotionListener, KeyListener
                 610,
                 200,
                 75,
-                2.5f,
+                2f,
                 Color.RED,
                 this
         );
@@ -119,7 +119,7 @@ public class PongGame extends JPanel implements MouseMotionListener, KeyListener
         }
 
         // increase difficulty
-        if (bounceCount == 5) {
+        if (bounceCount == 3) {
 
             bounceCount = 0;
 
@@ -173,6 +173,9 @@ public class PongGame extends JPanel implements MouseMotionListener, KeyListener
         return userScore;
     }
 
+    public Ball getBall() {
+        return gameBall; 
+    }
 
     @Override
     public void mouseMoved(MouseEvent e) {

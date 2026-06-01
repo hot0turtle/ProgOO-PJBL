@@ -125,6 +125,22 @@ public class Ball {
         return size;
     }
 
+    public int getCx() {
+        return cx;
+    }
+
+    public int getCy() {
+        return cy;
+    }
+
+    public int getSpeed() {
+        return speed;
+    }
+
+    public Color getColor() {
+        return color;
+    }
+
     // Setters
 
     public void setX(int x) {
