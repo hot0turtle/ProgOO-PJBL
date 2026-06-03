@@ -1,3 +1,5 @@
+//I need to override pongGame for the continue, instead of setting the default I set whatever I saved in the file and do it with that instead
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
