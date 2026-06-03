@@ -39,12 +39,17 @@ public class Leaderboard {
                     int score = 0;
                     try { score = Integer.parseInt(parts[1]); } catch (Exception ignored) {}
                     
-                    // Parse the ball - only load speed, use defaults for rest
+                    // Parse the ball - only load speed
                     String[] ballParts = parts[2].split("\\|");
                     if (ballParts.length >= 5) {
+                        int x = Integer.parseInt(ballParts[0]);
+                        int y = Integer.parseInt(ballParts[1]);
+                        int cx = Integer.parseInt(ballParts[2]);
+                        int cy = Integer.parseInt(ballParts[3]);
                         int speed = Integer.parseInt(ballParts[4]);
-                        // Create ball with default values but preserve speed
-                        Ball ball = new Ball(400, 300, 5, 5, speed, Color.WHITE, 10);
+
+
+                        Ball ball = new Ball(x, y, cx, cy, speed, Color.WHITE, 10);
                         list.add(new Entry(name, score, ball));
                     }
                 }
