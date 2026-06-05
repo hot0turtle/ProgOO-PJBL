@@ -28,14 +28,14 @@ public class PongGame extends JPanel implements MouseMotionListener, KeyListener
         this.playerName = playerName;
         this.onReturnToMenu = onReturnToMenu;
 
-        int startCx = Math.random() < 0.5 ? 3 : -3;
-        int startCy = Math.random() < 0.5 ? 3 : -3;
+        float startCx = Math.random() < 0.5 ? 3f : -3f;
+        float startCy = Math.random() < 0.5 ? 3f : -3f;
         gameBall = new Ball(
                 300,
                 200,
                 startCx,
                 startCy,
-                6,
+                3f,
                 Color.YELLOW,
                 10
         );
@@ -79,7 +79,7 @@ public class PongGame extends JPanel implements MouseMotionListener, KeyListener
         this.playerName = playerName;
         this.onReturnToMenu = onReturnToMenu;
 
-        gameBall = savedBall != null ? savedBall : new Ball(300, 200, 3, 3, 6, Color.YELLOW, 10);
+        gameBall = savedBall != null ? savedBall : new Ball(300, 200, 3f, 3f, 3f, Color.YELLOW, 10);
 
         if (savedUserPaddle != null) {
             userPaddle = new Paddle(
@@ -181,7 +181,7 @@ public class PongGame extends JPanel implements MouseMotionListener, KeyListener
         boolean pcHit = pcPaddle.checkCollision(gameBall);
         if (userHit || pcHit) {
             Paddle hitPaddle = userHit ? userPaddle : pcPaddle;
-            int currentCx = gameBall.getCx();
+            float currentCx = gameBall.getCx();
             boolean movingIntoPaddle = (userHit && currentCx < 0) || (pcHit && currentCx > 0);
 
             if (movingIntoPaddle) {
@@ -209,7 +209,7 @@ public class PongGame extends JPanel implements MouseMotionListener, KeyListener
         }
 
         // increase difficulty
-        if (bounceCount == 3) {
+        if (bounceCount == 1) {
 
             bounceCount = 0;
 
@@ -250,10 +250,10 @@ public class PongGame extends JPanel implements MouseMotionListener, KeyListener
         gameBall.setX(300);
         gameBall.setY(200);
 
-        gameBall.setCx(Math.random() < 0.5 ? 3 : -3);
-        gameBall.setCy(Math.random() < 0.5 ? 3 : -3);
+        gameBall.setCx(Math.random() < 0.5 ? 3f : -3f);
+        gameBall.setCy(Math.random() < 0.5 ? 3f : -3f);
 
-        gameBall.setSpeed(3);
+        gameBall.setSpeed(3f);
 
         bounceCount = 0;
 

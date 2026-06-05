@@ -28,7 +28,7 @@ public class Leaderboard {
 
         @Override
         public String toString() {
-            return String.format("%s - %d - %d", name, score, ball.getSpeed());
+            return String.format("%s - %d - %.2f", name, score, ball.getSpeed());
         }
     }
 
@@ -86,12 +86,11 @@ public class Leaderboard {
                     if (ballParts.length >= 5) {
                         int x = Integer.parseInt(ballParts[0]);
                         int y = Integer.parseInt(ballParts[1]);
-                        int cx = Integer.parseInt(ballParts[2]);
-                        int cy = Integer.parseInt(ballParts[3]);
-                        int speed = Integer.parseInt(ballParts[4]);
-
+                        float cx = Float.parseFloat(ballParts[2]);
+                        float cy = Float.parseFloat(ballParts[3]);
+                        float speed = Float.parseFloat(ballParts[4]);
                         Ball ball = new Ball(x, y, cx, cy, speed, Color.WHITE, 10);
-                        
+
                         // Parse paddle data if available
                         PaddleData userPaddleData = null;
                         PaddleData pcPaddleData = null;
@@ -99,7 +98,7 @@ public class Leaderboard {
                             userPaddleData = PaddleData.deserialize(parts[3]);
                             pcPaddleData = PaddleData.deserialize(parts[4]);
                         }
-                        
+
                         list.add(new Entry(name, score, ball, userPaddleData, pcPaddleData));
                     }
                 }

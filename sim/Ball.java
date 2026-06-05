@@ -5,23 +5,23 @@ public class Ball {
     private int x;
     private int y;
 
-    private int cx;
-    private int cy;
+    private float cx;
+    private float cy;
 
-    private int speed;
+    private float speed;
 
     private int size;
 
     private Color color;
 
-    static final int MAX_SPEED = 15;
+    static final float MAX_SPEED = 15f;
 
     public Ball(
             int x,
             int y,
-            int cx,
-            int cy,
-            int speed,
+            float cx,
+            float cy,
+            float speed,
             Color color,
             int size
     ) {
@@ -89,13 +89,13 @@ public class Ball {
     public void increaseSpeed() {
 
         if (speed < MAX_SPEED) {
-            speed++;
+            speed = speed + 0.25f;
 
             if (cx > 0) {
                 cx = speed;
 
             } else {
-                cx = speed * -1;
+                cx = -speed;
 
             }
 
@@ -103,7 +103,7 @@ public class Ball {
                 cy = speed;
 
             } else {
-                cy = speed * -1;
+                cy = -speed;
 
             }
 
@@ -125,15 +125,15 @@ public class Ball {
         return size;
     }
 
-    public int getCx() {
+    public float getCx() {
         return cx;
     }
 
-    public int getCy() {
+    public float getCy() {
         return cy;
     }
 
-    public int getSpeed() {
+    public float getSpeed() {
         return speed;
     }
 
@@ -151,15 +151,15 @@ public class Ball {
         this.y = y;
     }
 
-    public void setCx(int cx) {
+    public void setCx(float cx) {
         this.cx = cx;
     }
 
-    public void setCy(int cy) {
+    public void setCy(float cy) {
         this.cy = cy;
     }
 
-    public void setSpeed(int speed) {
+    public void setSpeed(float speed) {
         this.speed = speed;
     }
 }
