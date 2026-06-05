@@ -69,6 +69,53 @@ public class PongGame extends JPanel implements MouseMotionListener, KeyListener
 
     }
 
+    // Constructor for resuming from saved state
+    public PongGame(String playerName, Runnable onReturnToMenu, Ball savedBall, 
+                    Leaderboard.PaddleData savedUserPaddle, Leaderboard.PaddleData savedPCPaddle) {
+        this.playerName = playerName;
+        this.onReturnToMenu = onReturnToMenu;
+
+        gameBall = savedBall != null ? savedBall : new Ball(300, 200, 3, 3, 6, Color.YELLOW, 10);
+
+        if (savedUserPaddle != null) {
+            userPaddle = new Paddle(
+                    savedUserPaddle.x,
+                    savedUserPaddle.y,
+                    savedUserPaddle.height,
+                    savedUserPaddle.speed,
+                    new Color(savedUserPaddle.color),
+                    this
+            );
+        } else {
+            userPaddle = new Paddle(10, 200, 75, 3f, Color.BLUE, this);
+        }
+
+        if (savedPCPaddle != null) {
+            pcPaddle = new Paddle(
+                    savedPCPaddle.x,
+                    savedPCPaddle.y,
+                    savedPCPaddle.height,
+                    savedPCPaddle.speed,
+                    new Color(savedPCPaddle.color),
+                    this
+            );
+        } else {
+            pcPaddle = new Paddle(610, 200, 75, 2f, Color.RED, this);
+        }
+
+        userMouseY = 0;
+
+        userScore = 0;
+        pcScore = 0;
+
+        bounceCount = 0;
+
+        setPreferredSize(new Dimension(WINDOW_WIDTH, WINDOW_HEIGHT));
+        addMouseMotionListener(this);
+        addKeyListener(this);
+        setFocusable(true);
+    }
+
     @Override
     public void paintComponent(Graphics g) {
 
@@ -177,6 +224,14 @@ public class PongGame extends JPanel implements MouseMotionListener, KeyListener
 
     public Ball getBall() {
         return gameBall; 
+    }
+
+    public Paddle getUserPaddle() {
+        return userPaddle;
+    }
+
+    public Paddle getPCPaddle() {
+        return pcPaddle;
     }
 
     @Override

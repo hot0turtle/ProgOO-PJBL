@@ -168,8 +168,17 @@ public class Main {
         continueButton.addActionListener(a -> {
             StringBuilder sb = new StringBuilder();
             for (JLabel l : labels) sb.append(l.getText().charAt(0));
-            result[0] = sb.toString();
-            dialog.dispose();
+            String name = sb.toString();
+            
+            // Try to load saved game
+            Leaderboard.Entry entry = Leaderboard.findByName(name);
+            if (entry != null && entry.ball != null) {
+                dialog.dispose();
+                // Launch game with restored state
+                launchGameFromSave(parent, name, entry.ball, entry.userPaddleData, entry.pcPaddleData);
+            } else {
+                JOptionPane.showMessageDialog(dialog, "No save found for " + name);
+            }
         });       
 
         cancel.addActionListener(a -> {
@@ -241,12 +250,79 @@ public class Main {
             }
             int finalScore = gameRef[0].getUserScore();
             if (finalScore > 0) {
-
-                Leaderboard.addEntry(currentPlayer, finalScore, gameRef[0].getBall());
+                Paddle userPaddle = gameRef[0].getUserPaddle();
+                Paddle pcPaddle = gameRef[0].getPCPaddle();
+                Leaderboard.PaddleData userPaddleData = new Leaderboard.PaddleData(
+                        userPaddle.getX(), userPaddle.getY(), userPaddle.getHeight(), 
+                        userPaddle.getSpeed(), userPaddle.getColor().getRGB()
+                );
+                Leaderboard.PaddleData pcPaddleData = new Leaderboard.PaddleData(
+                        pcPaddle.getX(), pcPaddle.getY(), pcPaddle.getHeight(),
+                        pcPaddle.getSpeed(), pcPaddle.getColor().getRGB()
+                );
+                Leaderboard.addEntry(currentPlayer, finalScore, gameRef[0].getBall(), userPaddleData, pcPaddleData);
             }
             gameFrame.dispose();
             SwingUtilities.invokeLater(Main::createAndShowGUI);
         });
+
+        gameRef[0] = game;
+        game.setPreferredSize(new Dimension(WINDOW_WIDTH, WINDOW_HEIGHT));
+
+        gameFrame.add(game);
+        gameFrame.pack();
+        gameFrame.setResizable(false);
+        gameFrame.setLocationRelativeTo(null);
+        gameFrame.setVisible(true);
+
+        Timer timer = new Timer(33, new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                game.gameLogic();
+                game.repaint();
+            }
+        });
+
+        timerRef[0] = timer;
+        timer.start();
+        game.requestFocus();
+        
+        menuFrame.dispose();
+    }
+
+    private static void launchGameFromSave(JFrame menuFrame, String playerName, Ball savedBall, 
+                                           Leaderboard.PaddleData userPaddleData, Leaderboard.PaddleData pcPaddleData) {
+        currentPlayer = playerName;
+        
+        JFrame gameFrame = new JFrame("Pong");
+        gameFrame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+        gameFrame.getContentPane().setBackground(new Color(18, 18, 18));
+
+        final Timer[] timerRef = {null};
+        final PongGame[] gameRef = {null};
+
+        PongGame game = new PongGame(playerName, () -> {
+            // Return to menu callback: save score and return to menu
+            if (timerRef[0] != null) {
+                timerRef[0].stop();
+            }
+            int finalScore = gameRef[0].getUserScore();
+            if (finalScore > 0) {
+                Paddle userPaddle = gameRef[0].getUserPaddle();
+                Paddle pcPaddle = gameRef[0].getPCPaddle();
+                Leaderboard.PaddleData newUserPaddleData = new Leaderboard.PaddleData(
+                        userPaddle.getX(), userPaddle.getY(), userPaddle.getHeight(),
+                        userPaddle.getSpeed(), userPaddle.getColor().getRGB()
+                );
+                Leaderboard.PaddleData newPcPaddleData = new Leaderboard.PaddleData(
+                        pcPaddle.getX(), pcPaddle.getY(), pcPaddle.getHeight(),
+                        pcPaddle.getSpeed(), pcPaddle.getColor().getRGB()
+                );
+                Leaderboard.addEntry(playerName, finalScore, gameRef[0].getBall(), newUserPaddleData, newPcPaddleData);
+            }
+            gameFrame.dispose();
+            SwingUtilities.invokeLater(Main::createAndShowGUI);
+        }, savedBall, userPaddleData, pcPaddleData);
 
         gameRef[0] = game;
         game.setPreferredSize(new Dimension(WINDOW_WIDTH, WINDOW_HEIGHT));

@@ -94,4 +94,20 @@ public class Paddle {
     public int getY() {
         return y;
     }
+
+    public int getX() {
+        return x;
+    }
+
+    public int getHeight() {
+        return height;
+    }
+
+    public float getSpeed() {
+        return speed;
+    }
+
+    public Color getColor() {
+        return color;
+    }
 }
