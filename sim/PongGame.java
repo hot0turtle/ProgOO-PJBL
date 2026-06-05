@@ -27,11 +27,13 @@ public class PongGame extends JPanel implements MouseMotionListener, KeyListener
         this.playerName = playerName;
         this.onReturnToMenu = onReturnToMenu;
 
+        int startCx = Math.random() < 0.5 ? 3 : -3;
+        int startCy = Math.random() < 0.5 ? 3 : -3;
         gameBall = new Ball(
                 300,
                 200,
-                3,
-                3,
+                startCx,
+                startCy,
                 6,
                 Color.YELLOW,
                 10
@@ -209,8 +211,8 @@ public class PongGame extends JPanel implements MouseMotionListener, KeyListener
         gameBall.setX(300);
         gameBall.setY(200);
 
-        gameBall.setCx(3);
-        gameBall.setCy(3);
+        gameBall.setCx(Math.random() < 0.5 ? 3 : -3);
+        gameBall.setCy(Math.random() < 0.5 ? 3 : -3);
 
         gameBall.setSpeed(3);
 
