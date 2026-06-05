@@ -4,7 +4,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 
-public class PongGame extends JPanel implements MouseMotionListener, KeyListener {
+public class PongGame extends JPanel implements MouseMotionListener, KeyListener, MouseListener {
 
     static final int WINDOW_WIDTH = 640;
     static final int WINDOW_HEIGHT = 480;
@@ -22,6 +22,7 @@ public class PongGame extends JPanel implements MouseMotionListener, KeyListener
 
     private String playerName;
     private Runnable onReturnToMenu;
+    private boolean isPaused = false;
 
     public PongGame(String playerName, Runnable onReturnToMenu) {
         this.playerName = playerName;
@@ -66,6 +67,7 @@ public class PongGame extends JPanel implements MouseMotionListener, KeyListener
 
         setPreferredSize(new Dimension(WINDOW_WIDTH, WINDOW_HEIGHT));
         addMouseMotionListener(this);
+        addMouseListener(this);
         addKeyListener(this);
         setFocusable(true);
 
@@ -114,6 +116,7 @@ public class PongGame extends JPanel implements MouseMotionListener, KeyListener
 
         setPreferredSize(new Dimension(WINDOW_WIDTH, WINDOW_HEIGHT));
         addMouseMotionListener(this);
+        addMouseListener(this);
         addKeyListener(this);
         setFocusable(true);
     }
@@ -143,10 +146,23 @@ public class PongGame extends JPanel implements MouseMotionListener, KeyListener
                 20
         );
 
+        // paused indicator
+        if (isPaused) {
+            g.setColor(new Color(255, 255, 255, 150));
+            g.setFont(new Font("Segoe UI", Font.BOLD, 48));
+            String pausedText = "PAUSED";
+            FontMetrics fm = g.getFontMetrics();
+            int x = (getWidth() - fm.stringWidth(pausedText)) / 2;
+            int y = (getHeight() + fm.getAscent()) / 2;
+            g.drawString(pausedText, x, y);
+        }
+
     }
 
     // Handles all game updates
     public void gameLogic() {
+
+        if (isPaused) return;
 
         // move ball
         gameBall.moveBall();
@@ -284,5 +300,32 @@ public class PongGame extends JPanel implements MouseMotionListener, KeyListener
 
     @Override
     public void keyTyped(KeyEvent e) {
+    }
+
+    @Override
+    public void mouseEntered(MouseEvent e) {
+        isPaused = false;
+    }
+
+    @Override
+    public void mouseExited(MouseEvent e) {
+        isPaused = true;
+        try {
+            throw new MouseOutOfGameException("Mouse left game window - Game paused");
+        } catch (MouseOutOfGameException ex) {
+            // Exception caught - pausing game
+        }
+    }
+
+    @Override
+    public void mousePressed(MouseEvent e) {
+    }
+
+    @Override
+    public void mouseReleased(MouseEvent e) {
+    }
+
+    @Override
+    public void mouseClicked(MouseEvent e) {
     }
 }
