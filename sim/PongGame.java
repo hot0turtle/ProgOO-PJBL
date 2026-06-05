@@ -161,12 +161,35 @@ public class PongGame extends JPanel implements MouseMotionListener, KeyListener
         pcPaddle.moveTowards(gameBall.getY());
 
         // collision detection
-        if (userPaddle.checkCollision(gameBall) || pcPaddle.checkCollision(gameBall)) {
+        boolean userHit = userPaddle.checkCollision(gameBall);
+        boolean pcHit = pcPaddle.checkCollision(gameBall);
+        if (userHit || pcHit) {
+            Paddle hitPaddle = userHit ? userPaddle : pcPaddle;
+            int currentCx = gameBall.getCx();
+            boolean movingIntoPaddle = (userHit && currentCx < 0) || (pcHit && currentCx > 0);
 
-            gameBall.reverseX();
+            if (movingIntoPaddle) {
+                int paddleCenterY = hitPaddle.getY() + hitPaddle.getHeight() / 2;
+                int ballCenterY = gameBall.getY() + gameBall.getSize() / 2;
+                float relativeIntersectY = (ballCenterY - paddleCenterY) / (hitPaddle.getHeight() / 2f);
+                relativeIntersectY = Math.max(-1f, Math.min(1f, relativeIntersectY));
 
-            bounceCount++;
+                int maxVerticalSpeed = 4;
+                int newCy = Math.round(relativeIntersectY * maxVerticalSpeed);
+                if (newCy == 0) {
+                    newCy = gameBall.getCy() >= 0 ? 1 : -1;
+                }
+                gameBall.setCy(newCy);
+                gameBall.reverseX();
 
+                if (userHit) {
+                    gameBall.setX(hitPaddle.getX() + Paddle.PADDLE_WIDTH);
+                } else {
+                    gameBall.setX(hitPaddle.getX() - gameBall.getSize());
+                }
+
+                bounceCount++;
+            }
         }
 
         // increase difficulty
