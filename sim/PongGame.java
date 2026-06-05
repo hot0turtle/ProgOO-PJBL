@@ -50,7 +50,7 @@ public class PongGame extends JPanel implements MouseMotionListener, KeyListener
                 610,
                 200,
                 75,
-                2f,
+                5f,
                 Color.RED,
                 this
         );

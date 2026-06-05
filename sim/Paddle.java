@@ -71,19 +71,21 @@ public class Paddle {
     // Collision detection
     public boolean checkCollision(Ball b) {
 
+        int ballSize = b.getSize();
         int rightX = x + PADDLE_WIDTH;
-
         int bottomY = y + height;
 
-        if (b.getX() > (x - b.getSize())
-                && b.getX() < rightX) {
+        // Ball coordinates represent top-left corner of its bounding box
+        int ballLeft = b.getX();
+        int ballRight = b.getX() + ballSize;
+        int ballTop = b.getY();
+        int ballBottom = b.getY() + ballSize;
 
-            if (b.getY() > y
-                    && b.getY() < bottomY) {
+        // AABB (Axis-Aligned Bounding Box) collision detection
+        if (ballRight > x && ballLeft < rightX &&
+            ballBottom > y && ballTop < bottomY) {
 
-                return true;
-
-            }
+            return true;
 
         }
 
