@@ -1,7 +1,7 @@
 import java.awt.*;
 import javax.swing.JPanel;
 
-public class Paddle {
+public class Paddle extends Powers {
 
     private int height;
     private int x;
@@ -111,5 +111,23 @@ public class Paddle {
 
     public Color getColor() {
         return color;
+    }
+
+    public void setHeight(int height) {
+        this.height = height;
+    }
+
+    public void setSpeed(float speed) {
+        this.speed = speed;
+    }
+
+    @Override
+    public void sizePowerup(){
+        height++;
+    }
+
+    @Override
+    public void speedPowerup(){
+        speed++;
     }
 }

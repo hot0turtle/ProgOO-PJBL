@@ -23,6 +23,8 @@ public class PongGame extends JPanel implements MouseMotionListener, KeyListener
     private String playerName;
     private Runnable onReturnToMenu;
     private boolean isPaused = false;
+    // 0 = user, 1 = pc
+    private int lastTouched = -1;
 
     public PongGame(String playerName, Runnable onReturnToMenu) {
         this.playerName = playerName;
@@ -137,6 +139,11 @@ public class PongGame extends JPanel implements MouseMotionListener, KeyListener
         userPaddle.paint(g);
         pcPaddle.paint(g);
 
+        // power block
+        if (Powers.hasActiveBlock()) {
+            Powers.paintBlock(g);
+        }
+
         // score
         g.setColor(Color.WHITE);
 
@@ -167,6 +174,10 @@ public class PongGame extends JPanel implements MouseMotionListener, KeyListener
         // move ball
         gameBall.moveBall();
 
+        // check block collision with ball
+        if (Powers.hasActiveBlock() && Powers.intersectsBall(gameBall)) {
+            Powers.activateIfCollides(gameBall, userPaddle, pcPaddle, lastTouched);
+        }
         // bounce top/bottom
         gameBall.bounceOffEdges(0, getHeight());
 
@@ -204,7 +215,15 @@ public class PongGame extends JPanel implements MouseMotionListener, KeyListener
                     gameBall.setX(hitPaddle.getX() - gameBall.getSize());
                 }
 
+                // record who hit the ball last (0=user, 1=pc)
+                lastTouched = userHit ? 0 : 1;
+
                 bounceCount++;
+
+                // 1 in 10 chance
+                if (!Powers.hasActiveBlock() && Math.random() < 0.7) {
+                    Powers.spawnRandom(WINDOW_WIDTH, WINDOW_HEIGHT);
+                }
             }
         }
 
@@ -254,6 +273,12 @@ public class PongGame extends JPanel implements MouseMotionListener, KeyListener
         gameBall.setCy(Math.random() < 0.5 ? 3f : -3f);
 
         gameBall.setSpeed(3f);
+        gameBall.setSize(10);
+
+        userPaddle.setSpeed(3f);
+        userPaddle.setHeight(75);
+        pcPaddle.setSpeed(5f);
+        pcPaddle.setHeight(75);
 
         bounceCount = 0;
 

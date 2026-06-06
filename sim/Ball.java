@@ -1,6 +1,6 @@
 import java.awt.*;
 
-public class Ball {
+public class Ball extends Powers {
 
     private int x;
     private int y;
@@ -162,4 +162,40 @@ public class Ball {
     public void setSpeed(float speed) {
         this.speed = speed;
     }
+
+    public void setSize(int size){
+        this.size = size;
+    }
+
+    @Override
+    public void sizePowerup(){
+        size++;
+
+    }
+
+    @Override
+    public void speedPowerup(){
+        //reusing the speedup code but with different values
+        if (speed < MAX_SPEED) {
+            speed = speed + 0.75f;
+
+            if (cx > 0) {
+                cx = speed;
+
+            } else {
+                cx = -speed;
+
+            }
+
+            if (cy > 0) {
+                cy = speed;
+
+            } else {
+                cy = -speed;
+
+            }
+
+        }
+    }
+
 }
