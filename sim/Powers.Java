@@ -5,16 +5,14 @@
 
 import java.awt.*;
 
-public abstract class Powers{
-
-    public abstract void speedPowerup();
-
-    public abstract void sizePowerup();
-
+public abstract class Powers implements powerMethods{
 
     private static boolean blockActive = false;
     private static int bx, by, bw, bh;
     private static Color bcolor = new Color(255, 200, 0);
+
+    private static String debugText = null;
+    private static int debugTimer = 0;
 
     public static boolean hasActiveBlock() {
         return blockActive;
@@ -37,6 +35,28 @@ public abstract class Powers{
         g.setColor(Color.BLACK);
         g.drawRect(bx, by, bw, bh);
         g.setColor(prev);
+    }
+
+    public static void paintDebugText(Graphics g) {
+        if (debugTimer <= 0 || debugText == null) return;
+        Color prev = g.getColor();
+        Font prevFont = g.getFont();
+        g.setFont(new Font("Segoe UI", Font.BOLD, 9));
+        g.setColor(Color.WHITE);
+        FontMetrics fm = g.getFontMetrics();
+        int textWidth = fm.stringWidth(debugText);
+        int x = (bx + bw / 2) - (textWidth / 2);
+        int y = by - 10;
+        if (y < 30) {
+            y = by + bh + 24;
+        }
+        g.drawString(debugText, x, y);
+        g.setColor(prev);
+        g.setFont(prevFont);
+        debugTimer--;
+        if (debugTimer <= 0) {
+            debugText = null;
+        }
     }
 
     public static boolean intersectsBall(Ball b) {
@@ -62,18 +82,33 @@ public abstract class Powers{
         switch (which) {
             case 0:
                 b.speedPowerup();
+                debugText = "Ball speed powerup activated";
                 break;
             case 1:
-                if (lastTouched == 0) user.speedPowerup(); else pc.speedPowerup();
+                if (lastTouched == 0) {
+                    user.speedPowerup();
+                    debugText = "User paddle speed powerup";
+                } else {
+                    pc.speedPowerup();
+                    debugText = "PC paddle speed powerup";
+                }
                 break;
             case 2:
                 b.sizePowerup();
+                debugText = "Ball size powerup";
                 break;
             case 3:
-                if (lastTouched == 0) user.sizePowerup(); else pc.sizePowerup();
+                if (lastTouched == 0) {
+                    user.sizePowerup();
+                    debugText = "User paddle size powerup";
+                } else {
+                    pc.sizePowerup();
+                    debugText = "PC paddle size powerup";
+                }
                 break;
         }
 
+        debugTimer = 60;
         blockActive = false;
     }
 

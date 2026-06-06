@@ -153,6 +153,9 @@ public class PongGame extends JPanel implements MouseMotionListener, KeyListener
                 20
         );
 
+        // debug powerup text
+        Powers.paintDebugText(g);
+
         // paused indicator
         if (isPaused) {
             g.setColor(new Color(255, 255, 255, 150));

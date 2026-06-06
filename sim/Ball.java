@@ -169,7 +169,7 @@ public class Ball extends Powers {
 
     @Override
     public void sizePowerup(){
-        size++;
+        size += size / 2;
 
     }
 

@@ -123,7 +123,7 @@ public class Paddle extends Powers {
 
     @Override
     public void sizePowerup(){
-        height++;
+        height += height / 3;
     }
 
     @Override
