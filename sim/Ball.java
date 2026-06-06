@@ -168,6 +168,11 @@ public class Ball extends Powers {
     }
 
     @Override
+    public String getPowerSource() {
+        return "ball power";
+    }
+
+    @Override
     public void sizePowerup(){
         size += size / 2;
 

@@ -122,6 +122,11 @@ public class Paddle extends Powers {
     }
 
     @Override
+    public String getPowerSource() {
+        return "paddle power";
+    }
+
+    @Override
     public void sizePowerup(){
         height += height / 3;
     }

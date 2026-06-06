@@ -7,6 +7,10 @@ import java.awt.*;
 
 public abstract class Powers implements powerMethods{
 
+    public String getPowerSource() {
+        return "generic power";
+    }
+
     private static boolean blockActive = false;
     private static int bx, by, bw, bh;
     private static Color bcolor = new Color(255, 200, 0);
@@ -108,7 +112,7 @@ public abstract class Powers implements powerMethods{
                 break;
         }
 
-        debugTimer = 60;
+        debugTimer = 30;
         blockActive = false;
     }
 
