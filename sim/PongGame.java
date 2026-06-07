@@ -16,7 +16,7 @@ public class PongGame extends JPanel implements MouseMotionListener, KeyListener
     private int userMouseY;
 
     private int userScore;
-    private int pcScore;
+
 
     private int bounceCount;
 
@@ -38,7 +38,7 @@ public class PongGame extends JPanel implements MouseMotionListener, KeyListener
                 startCx,
                 startCy,
                 3f,
-                Color.YELLOW,
+                Color.WHITE,
                 10
         );
 
@@ -63,7 +63,6 @@ public class PongGame extends JPanel implements MouseMotionListener, KeyListener
         userMouseY = 0;
 
         userScore = 0;
-        pcScore = 0;
 
         bounceCount = 0;
 
@@ -112,7 +111,7 @@ public class PongGame extends JPanel implements MouseMotionListener, KeyListener
         userMouseY = 0;
 
         userScore = 0;
-        pcScore = 0;
+
 
         bounceCount = 0;
 
@@ -148,7 +147,7 @@ public class PongGame extends JPanel implements MouseMotionListener, KeyListener
         g.setColor(Color.WHITE);
 
         g.drawString(
-                playerName + " [ " + userScore + " ]   PC [ " + pcScore + " ]",
+                playerName + " [ " + userScore + " ] ",
                 200,
                 20
         );
@@ -223,7 +222,7 @@ public class PongGame extends JPanel implements MouseMotionListener, KeyListener
 
                 bounceCount++;
 
-                // 1 in 10 chance
+                // Spawnchance
                 if (!Powers.hasActiveBlock() && Math.random() < 0.7) {
                     Powers.spawnRandom(WINDOW_WIDTH, WINDOW_HEIGHT);
                 }
@@ -242,7 +241,7 @@ public class PongGame extends JPanel implements MouseMotionListener, KeyListener
         // scoring
         if (gameBall.getX() < 0) {
 
-            pcScore++;
+            userScore = 0;
 
             reset();
 

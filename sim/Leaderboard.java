@@ -28,7 +28,7 @@ public class Leaderboard {
 
         @Override
         public String toString() {
-            return String.format("%s - %d - %.2f", name, score, ball.getSpeed());
+            return String.format("%s - %d", name, score);
         }
     }
 

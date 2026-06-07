@@ -13,7 +13,7 @@ public abstract class Powers implements powerMethods{
 
     private static boolean blockActive = false;
     private static int bx, by, bw, bh;
-    private static Color bcolor = new Color(255, 200, 0);
+    private static Color bcolor = new Color(255, 255, 143);
 
     private static String debugText = null;
     private static int debugTimer = 0;
