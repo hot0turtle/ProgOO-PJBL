@@ -182,7 +182,7 @@ public class Ball extends Powers {
     public void speedPowerup(){
         //reusing the speedup code but with different values
         if (speed < MAX_SPEED) {
-            speed = speed + 0.75f;
+            speed = speed + 1.75f;
 
             if (cx > 0) {
                 cx = speed;

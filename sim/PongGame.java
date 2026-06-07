@@ -66,6 +66,8 @@ public class PongGame extends JPanel implements MouseMotionListener, KeyListener
 
         bounceCount = 0;
 
+        Powers.spawnSpeedPowerup(WINDOW_WIDTH, WINDOW_HEIGHT);
+
         setPreferredSize(new Dimension(WINDOW_WIDTH, WINDOW_HEIGHT));
         addMouseMotionListener(this);
         addMouseListener(this);
@@ -281,6 +283,8 @@ public class PongGame extends JPanel implements MouseMotionListener, KeyListener
         userPaddle.setHeight(75);
         pcPaddle.setSpeed(5f);
         pcPaddle.setHeight(75);
+
+        Powers.spawnSpeedPowerup(WINDOW_WIDTH, WINDOW_HEIGHT);
 
         bounceCount = 0;
 
