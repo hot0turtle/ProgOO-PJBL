@@ -126,7 +126,6 @@ public class Main {
             lbl.setBorder(BorderFactory.createEmptyBorder(6,12,6,12));
             JButton down = new JButton("▼");
 
-            final int idx = i;
             up.addActionListener(a -> {
                 char c = lbl.getText().charAt(0);
                 int p = chars.indexOf(c);
