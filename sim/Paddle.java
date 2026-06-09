@@ -82,6 +82,7 @@ public class Paddle extends Powers {
         int ballBottom = b.getY() + ballSize;
 
         // AABB (Axis-Aligned Bounding Box) collision detection
+        //Based the principles here: https://dev.to/pratyush_mohanty_6b8f2749/the-math-behind-bounding-box-collision-detection-aabb-vs-obbseparate-axis-theorem-1gdn
         if (ballRight > x && ballLeft < rightX &&
             ballBottom > y && ballTop < bottomY) {
 
